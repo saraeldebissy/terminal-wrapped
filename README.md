@@ -2,6 +2,8 @@
 
 Spotify Wrapped, but for your terminal. Analyze your shell history and get a beautiful, animated visualization of your command-line habits.
 
+![Screenshot](./screenshot.png)
+
 ## Quick Start
 
 ```bash
