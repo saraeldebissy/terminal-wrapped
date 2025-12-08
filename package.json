@@ -8,6 +8,7 @@
     "build:cli": "pnpm --filter terminal-wrapped build",
     "dev:web": "pnpm --filter terminal-wrapped-web dev",
     "cli": "node packages/cli/bin/terminal-wrapped",
+    "cli:zsh": "node packages/cli/bin/terminal-wrapped ~/.zsh_history",
     "cli:help": "node packages/cli/bin/terminal-wrapped --help"
   },
   "packageManager": "pnpm@10.16.0"
