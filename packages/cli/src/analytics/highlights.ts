@@ -75,12 +75,30 @@ export function generateHighlights(stats: Partial<Stats>): Highlight[] {
     }
   }
 
-  // Secrets exposed warning
+  // Secrets exposed warning - with varying levels of shame
   if (stats.secrets && stats.secrets.totalSecretsFound > 0) {
+    const count = stats.secrets.totalSecretsFound;
+    let title: string;
+    let description: string;
+
+    if (count >= 10) {
+      title = 'Security Nightmare';
+      description = `**${count}** secrets in your shell history?! Your InfoSec team is crying somewhere. Rotate. Everything. Now.`;
+    } else if (count >= 5) {
+      title = 'Password Piñata';
+      description = `**${count}** secrets just hanging out in plaintext. Your history file is basically a treasure map for hackers.`;
+    } else if (count >= 2) {
+      title = 'Oops, You Did It Again';
+      description = `Found **${count}** secrets in your history. We won't tell anyone... but maybe rotate those anyway?`;
+    } else {
+      title = 'One Secret Keeper';
+      description = `Caught **1** secret in your history. Everyone makes mistakes. Just... maybe not this one again?`;
+    }
+
     highlights.push({
       id: 'secrets-exposed',
-      title: 'Secrets Spotter',
-      description: `Found **${stats.secrets.totalSecretsFound}** potential secret(s) in your history. Time to rotate those keys!`,
+      title,
+      description,
       iconKey: 'alert',
     });
   }

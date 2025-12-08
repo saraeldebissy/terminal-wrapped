@@ -122,8 +122,8 @@ function App() {
       {/* Secrets Detection */}
       <Section
         id="secrets"
-        title="Secrets Exposed"
-        subtitle="Credentials that might be in your shell history"
+        title="Your Dirty Little Secrets"
+        subtitle="Things you really shouldn't have typed into a terminal"
       >
         <SecretsSection secrets={stats.secrets} />
       </Section>
