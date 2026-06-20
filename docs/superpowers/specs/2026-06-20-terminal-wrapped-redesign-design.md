@@ -16,7 +16,7 @@ Transform the web visualization from a scrolling dashboard into a **Spotify-Wrap
 | Navigation | User-paced: click / arrow keys / spacebar, with Wrapped-style progress bars (position indicator, NOT an auto-advance timer) |
 | Palette — backgrounds | lime `#C9F23C`, magenta `#FF2E93`, electric blue `#2D6DF6`, violet `#8B5CF6`, ink `#0A0A0A` |
 | Palette — accents | yellow `#FFD23F`, coral `#FF4B2B`, white |
-| Type | Bold grotesque display for headlines/numbers; **monospace for command tokens** (`git`, `-la`). The sans/mono split is the designer-who-codes signature. |
+| Type | Display: **Plus Jakarta Sans** (ExtraBold/Bold) — free, geometric, Circular-adjacent for the Spotify feel. Command tokens: **JetBrains Mono**. The sans/mono split is the designer-who-codes signature. |
 | Voice | Dry & deadpan. Three rotated registers: flat fact / dry aside / single word. Emoji rationed to near-zero. |
 
 ## Slide Sequence
@@ -74,7 +74,8 @@ One small, focused component per slide, each receiving its data as props and own
 ## Design Tokens
 
 - `tailwind.config.cjs`: remove `primary/secondary/accent`; add `lime, magenta, blue, violet, ink` (backgrounds) and `yellow, coral, white` (accents).
-- Type scale: hero numbers via responsive `clamp()`, tight leading. Display grotesque + mono pairing. Per-background text color (black or white) locked for WCAG AA contrast.
+- Fonts: **Plus Jakarta Sans** (display, weights 700/800) + **JetBrains Mono** (command tokens), self-hosted via `@fontsource` or loaded from Google Fonts.
+- Type scale: hero numbers via responsive `clamp()`, tight leading. Per-background text color (black or white) locked for WCAG AA contrast.
 
 ## Motion
 
