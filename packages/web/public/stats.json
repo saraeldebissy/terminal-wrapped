@@ -104,7 +104,7 @@
   "parameters": {
     "topFlags": [
       { "flag": "-m", "count": 420, "commands": ["git"] },
-      { "flag": "--rf", "count": 88, "commands": ["rm"] },
+      { "flag": "-rf", "count": 88, "commands": ["rm"] },
       { "flag": "-la", "count": 310, "commands": ["ls"] }
     ],
     "commandFlagCombos": [

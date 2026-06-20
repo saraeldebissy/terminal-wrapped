@@ -9,10 +9,3 @@ export const PALETTE = {
 
 export type ColorToken = keyof typeof PALETTE;
 
-/** Accent colors — used for badges, type highlights, decorative marks. Never slide backgrounds. */
-export const ACCENT = {
-  lime: '#C9F23C',
-  yellow: '#FFD23F',
-  coral: '#FF4B2B',
-  white: '#FFFFFF',
-} as const;

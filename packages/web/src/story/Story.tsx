@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import type { MouseEvent } from 'react';
-import { AnimatePresence } from 'motion/react';
+import { AnimatePresence, MotionConfig } from 'motion/react';
 import type { Stats } from '../api/types';
 import { buildSlideManifest } from '../slides/manifest';
 import { SLIDE_REGISTRY } from '../slides/registry';
@@ -19,6 +19,13 @@ export function Story({ stats }: StoryProps) {
   const slides = useMemo(() => buildSlideManifest(stats), [stats]);
   const nav = useStoryNavigation(slides.length);
   const { next, prev, index } = nav;
+
+  const mainRef = useRef<HTMLElement>(null);
+
+  // Auto-focus on mount so keyboard nav is immediately reachable.
+  useEffect(() => {
+    mainRef.current?.focus();
+  }, []);
 
   // Guard against a transient out-of-range index if the manifest ever shrinks.
   const entry = slides[index] ?? slides[slides.length - 1];
@@ -52,13 +59,26 @@ export function Story({ stats }: StoryProps) {
   }, [next, prev]);
 
   return (
-    <main className="relative h-full w-full overflow-hidden cursor-pointer" onClick={handleClick}>
-      <ProgressBars count={slides.length} index={index} />
-      <AnimatePresence mode="wait">
-        <Slide key={entry.id} bg={entry.bg}>
-          <SlideView stats={stats} />
-        </Slide>
-      </AnimatePresence>
-    </main>
+    <MotionConfig reducedMotion="user">
+      <main
+        ref={mainRef}
+        className="relative h-full w-full overflow-hidden cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-inset"
+        onClick={handleClick}
+        tabIndex={0}
+        role="region"
+        aria-roledescription="story"
+        aria-label="Terminal Wrapped story. Use left and right arrow keys to navigate."
+      >
+        <div aria-live="polite" className="sr-only">
+          Slide {index + 1} of {slides.length}
+        </div>
+        <ProgressBars count={slides.length} index={index} />
+        <AnimatePresence mode="wait">
+          <Slide key={entry.id} bg={entry.bg}>
+            <SlideView stats={stats} />
+          </Slide>
+        </AnimatePresence>
+      </main>
+    </MotionConfig>
   );
 }
