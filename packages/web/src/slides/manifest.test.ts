@@ -40,4 +40,64 @@ describe('buildSlideManifest', () => {
       expect(valid).toContain(s.bg);
     }
   });
+
+  it('skips only countdown when topCommands is empty but other data is present', () => {
+    const ids = buildSlideManifest({ ...fullStats, topCommands: [] }).map((s) => s.id);
+    expect(ids).not.toContain('countdown');
+    expect(ids).toContain('peakHour');
+    expect(ids).toContain('busiestDay');
+    expect(ids).toContain('type');
+    expect(ids).toContain('flag');
+    expect(ids).toContain('secrets');
+  });
+
+  it('skips only peakHour when activityByHour is all-zero but other data is present', () => {
+    const ids = buildSlideManifest({ ...fullStats, activityByHour: [{ hour: 0, count: 0 }] }).map((s) => s.id);
+    expect(ids).not.toContain('peakHour');
+    expect(ids).toContain('busiestDay');
+    expect(ids).toContain('type');
+    expect(ids).toContain('flag');
+    expect(ids).toContain('countdown');
+    expect(ids).toContain('secrets');
+  });
+
+  it('skips only busiestDay when activityByDay is empty but other data is present', () => {
+    const ids = buildSlideManifest({ ...fullStats, activityByDay: [] }).map((s) => s.id);
+    expect(ids).not.toContain('busiestDay');
+    expect(ids).toContain('peakHour');
+    expect(ids).toContain('type');
+    expect(ids).toContain('flag');
+    expect(ids).toContain('countdown');
+    expect(ids).toContain('secrets');
+  });
+
+  it('skips only type when categories is empty but other data is present', () => {
+    const ids = buildSlideManifest({ ...fullStats, categories: [] }).map((s) => s.id);
+    expect(ids).not.toContain('type');
+    expect(ids).toContain('peakHour');
+    expect(ids).toContain('busiestDay');
+    expect(ids).toContain('flag');
+    expect(ids).toContain('countdown');
+    expect(ids).toContain('secrets');
+  });
+
+  it('skips only flag when parameters.topFlags is empty but other data is present', () => {
+    const ids = buildSlideManifest({ ...fullStats, parameters: { ...fullStats.parameters, topFlags: [] } }).map((s) => s.id);
+    expect(ids).not.toContain('flag');
+    expect(ids).toContain('peakHour');
+    expect(ids).toContain('busiestDay');
+    expect(ids).toContain('type');
+    expect(ids).toContain('countdown');
+    expect(ids).toContain('secrets');
+  });
+
+  it('skips only secrets when totalSecretsFound is 0 but other data is present', () => {
+    const ids = buildSlideManifest({ ...fullStats, secrets: { ...fullStats.secrets, totalSecretsFound: 0 } }).map((s) => s.id);
+    expect(ids).not.toContain('secrets');
+    expect(ids).toContain('peakHour');
+    expect(ids).toContain('busiestDay');
+    expect(ids).toContain('type');
+    expect(ids).toContain('flag');
+    expect(ids).toContain('countdown');
+  });
 });
